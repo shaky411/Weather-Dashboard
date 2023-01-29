@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#search-button {
+    background-color: #FF0076;
+    color: #fff;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-left: 5px;
+
+}
+
+input {
+    padding: 5px;
+}

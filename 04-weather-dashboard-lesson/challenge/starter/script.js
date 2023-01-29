@@ -1,31 +1,53 @@
 
 
+// Target the form element
+const searchForm = document.getElementById('search-form');
 
-let testBtn = document.getElementById('test-btn');
-testBtn.addEventListener('click', getApi);
+// Listen on the subit of the form
+searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    
+// get the value of the search input
+    let inputCity = document.getElementById('search-input').value;
+    let apiKey = 'efb239de7d746f4bc88b6d592ea228c1'
+    let cityURL = `https://api.openweathermap.org/geo/1.0/direct?q=${inputCity}&limit=5&appid=` + apiKey;
+    
 
-let queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=51.454514&lon=-2.587910&appid=efb239de7d746f4bc88b6d592ea228c1`;
+    fetch(cityURL)
+.then(response => response.json())
+.then(cityData => {
 
+    let firstCity = cityData[0];
 
-function getApi() {
+    console.log(firstCity.lat);
+    console.log(firstCity.lon);
 
-    console.log("Button Clicked!");
+    return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=` + apiKey)
 
-    fetch(queryURL)
-        .then(response => response.json())
-        .then(function (response) {
+})
 
-            console.log(response);
-            console.log("===============================");
-            console.log("City: " + response.city.name);
-            console.log("===============================");
-            console.log(response.list[0].weather[0].description);
-            console.log(response.list[0].weather[0].main);
+.then(response => response.json())
+.then(data => {
 
-            // let results = response.results;
+    console.log(data)
+    // Date/Time
+    let dateTime = data.list[0].dt
+    let dateTimeConvert = moment(dateTime, "X").format("DD/MM/YYYY HH:mm:ss")
+    console.log(dateTimeConvert)
+    
+    // Wind Speed
+    console.log("The Wind speed is: " + data.list[0].wind.speed)
 
-            // console.log(response.results)
+    // Weather Description
+    console.log("Weather: " + data.list[0].weather[0].description)
 
-        })
+    // Icon
+    let icon = (data.list[0].weather[0].icon)
 
-};
+    // Weather icon URL
+    let weatherIcon = `https://openweathermap.org/img/wn/${icon}@4x.png`
+    console.log(weatherIcon)
+
+})
+
+})
