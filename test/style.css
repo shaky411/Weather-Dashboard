@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+aside {
+    background-color: #FF006A;
+    color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#clear-btn {
+    width: 100px;
+    margin-top: 10px;
+    background-color: #282C34;
+    border-style: none;
+}
+
+.weather-card {
+    width: 300px;
+    color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #282C34;
+}
+
+#search-button {
+    background-color: rgb(27, 113, 113);
+}
