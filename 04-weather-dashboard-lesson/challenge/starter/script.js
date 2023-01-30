@@ -1,22 +1,34 @@
 
 
+// let infoContainer = document.querySelector("#city-name");
+
 // Target the form element
 const searchForm = document.getElementById('search-form');
 
 // Clear searched city input
 function clearInput() {
     let clearSearch = document.getElementById('search-input')
-    if (clearSearch.value !=="") {
+    if (clearSearch.value !== "") {
         clearSearch.value = "";
     }
 }
 
-// Listen on the subit of the form
+// Listen on the submit of the form
 searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    weatherSearch()
+
+})
+
+
+
+
+function weatherSearch() {
+
     // get the value of the search input
     let inputCity = document.getElementById('search-input').value;
+
     clearInput();
 
     let apiKey = 'efb239de7d746f4bc88b6d592ea228c1'
@@ -28,7 +40,7 @@ searchForm.addEventListener("submit", (event) => {
         .then(cityData => {
 
             let firstCity = cityData[0];
-            
+
             let lat = firstCity.lat;
             let lon = firstCity.lon;
 
@@ -39,52 +51,78 @@ searchForm.addEventListener("submit", (event) => {
         .then(response => response.json())
         .then(data => {
 
-            // put a loop here to get city data for 5 days only
-
             console.log(data)
+
+            let windSpeed = ("The Wind speed is: " + data.list[0].wind.speed + "m/s")
+            let temp = ("The temp is: " + data.list[0].main.temp + "℃");
+            let humidity = data.list[0].main.humidity
+            let humidityData = ("The humidity is: " + humidity + "%");
             let currentCity = data.city.name;
-            console.log(currentCity)
 
-            let times = data.list;
 
-            for (let i = 0; i < times.length; i += 8) {
-                const time = times[i];
-                console.log(time)
-            }
+            let newDiv = document.createElement("div")
+            
+            newDiv.innerHTML = (`
+            <h1>${currentCity}</h1>
+            <p/>${windSpeed}</p>
+            <p/>${temp}</p>
+            <p/>${humidityData}</p>
+            `);
+
+            document.querySelector("#city-name").append(newDiv)
+
+            // let times = data.list;
+
+            // put a loop here to get city data for 5 days only
+            // for (let i = 0; i < 5; i++) {
+
+            //     // console.log(time.weather[0])
+            //     let temp = data.list[i].main.temp;
+            //     let wind = data.list[i].wind.speed;
+            //     let date = data.list[((i + 1) * 8) - 1].dt
+            //     let dateConvert = moment(date, "X").format("llll")
+            //     console.log(dateConvert)
+            //     console.log("The temp is: " + temp + "℃")
+            //     console.log("The wind speed is: " + wind + "m/s")
+            // }
 
             // Date/Time
             let dateTime = data.list[0].dt
-            let dateTimeConvert = moment(dateTime, "X").format("DD/MM/YYYY HH:mm:ss")
+            let dateTimeConvert = moment(dateTime, "X").format("llll")
             console.log(dateTimeConvert)
 
             // Wind Speed
-            console.log("The Wind speed is: " + data.list[0].wind.speed)
+            
 
             // Temp
-            console.log("The temp is " + data.list[0].main.temp + "℃");
+            
 
             // Weather Description
             let weatherDescription = data.list[0].weather[0].description
 
+            // Humidity
+            
+
             // Icon
             let icon = (data.list[0].weather[0].icon)
             // Weather icon URL
-            let weatherIcon = `https://openweathermap.org/img/wn/${icon}@4x.png`
+            let weatherIcon = `https://openweathermap.org/img/wn/${icon}@2x.png`
             console.log(weatherIcon)
 
             let img = document.createElement("img");
-            img.src = `https://openweathermap.org/img/wn/${icon}@4x.png`
+            img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
             let src = document.getElementById('imageHolder');
             src.appendChild(img);
 
-            document.querySelector("#today").append(dateTimeConvert);
-            document.querySelector("#city-name").append(currentCity);
+
+            // append 1st day weather card
+            document.querySelector("#today").innerHTML = dateTimeConvert;
+            // document.querySelector("#city-name").innerHTML = currentCity
+            
             // document.querySelector("#weather-image").append(iconSource);
             // document.querySelector("#forecast").append(weatherDescription);
 
-            
-            
-
         });
 
-})
+}
+

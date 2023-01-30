@@ -10,9 +10,36 @@
     border-radius: 10px;
     border: 1px solid black;
     margin-left: 5px;
-
 }
 
 input {
     padding: 5px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+aside {
+    background-color: #001946;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    height: 265px;
+    max-height: 265px;
+}
+
+#clear-btn {
+    padding: 0px 5px 0px 5px
+}
+
+p {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#today {
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: underline;
 }
