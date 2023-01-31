@@ -39,7 +39,7 @@ function weatherSearchApi() {
 
     // get the value of the search input
     let inputCity = document.getElementById('search-input').value;
-    
+
     let apiKey = 'efb239de7d746f4bc88b6d592ea228c1'
     let cityURL = `https://api.openweathermap.org/geo/1.0/direct?q=${inputCity}&limit=5&appid=` + apiKey;
 
@@ -59,6 +59,8 @@ function weatherSearchApi() {
         .then(response => response.json())
         .then(data => {
 
+            // Need to loop over the data to give the results for different days???
+
             console.log(data)
 
             // Data pulled from api call
@@ -70,8 +72,10 @@ function weatherSearchApi() {
             let currentCity = data.city.name;
             // date/time
             let dateTime = data.list[0].dt
-            let dateTimeConvert = moment(dateTime, "X").format("llll")
+            let dateTimeConvert = moment(dateTime, "X").format("DD/MM/YY")
             console.log(dateTimeConvert)
+            // Daily card date
+            let cardDate = moment(dateTime, "X").format("l")
             // Icon
             let icon = (data.list[0].weather[0].icon)
             // Weather icon URL
@@ -79,7 +83,7 @@ function weatherSearchApi() {
             console.log(weatherIcon)
 
             cardHeader.innerHTML = currentCity + " (" + dateTimeConvert + ")" + `<img class="city-icon" src=${weatherIcon} alt="Weather logo">`
-            
+
             const listArray = [];
 
             // clear current weather
@@ -94,9 +98,37 @@ function weatherSearchApi() {
             listArray[0].textContent = temp;
             listArray[1].textContent = humidityData;
             listArray[2].textContent = windSpeed;
-            
+
             listArray.forEach(li => {
                 currentWeatherEl.append(li);
+            })
+
+
+
+            let fiveDayArray = [];
+
+            dailyForecastContainer.innerHTML = "";
+
+
+            for (let i = 0; i < 5; i++) {
+                const weatherCards = document.createElement("div");
+
+                weatherCards.innerHTML = `
+                    <div class="p-2 m-2 dailyCard  text-white">
+                        <h5>${cardDate}</h5>
+                        <ul id="conditions">
+                            <li><img class="city-icon" src=${weatherIcon} alt="Weather logo" class="mx-auto"></li>
+                            <li>${temp}</li>
+                            <li>${humidityData}</li>
+                        </ul>
+                    </div>`;
+
+
+                fiveDayArray.push(weatherCards);
+            }
+
+            fiveDayArray.forEach(card => {
+                dailyForecastContainer.appendChild(card);
             })
             // document.querySelector("#conditions").append(newList)
 
@@ -116,7 +148,7 @@ function weatherSearchApi() {
             // }
 
             // Date/Time
-            
+
 
             // Weather Description
             let weatherDescription = data.list[0].weather[0].description
