@@ -1,14 +1,14 @@
-const cityNameInput = document.querySelector("#city-name");
-// const searchForm = document.querySelector("#search-form");
-const currentConditionsUl = document.querySelector("#current-forecast #conditions");
 
-const previousSearches = document.querySelector("#previous-searches");
-const previousSearchContainer = document.querySelector("#previous-searches .card-body");
-const dailyCardContainer = document.querySelector("#daily-forecast");
-const fiveDayHeader = document.querySelector("#five-day");
 
-// let infoContainer = document.querySelector("#city-name");
 
+// const previousSearches = document.querySelector("#previous-searches");
+// const previousSearchContainer = document.querySelector("#previous-searches .card-body");
+
+const dailyForecastContainer = document.querySelector("#daily-forecast");
+const fiveDayh4 = document.querySelector("#five-day");
+const cityInput = document.querySelector("#city-name");
+// Current weather element
+const currentWeatherEl = document.querySelector("#current-forecast #conditions");
 // Current weather header
 const cardHeader = document.querySelector("#current-forecast h3");
 // Target the form element
@@ -28,22 +28,20 @@ function clearInput() {
 searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // newDiv.innerHTML = "";
-    weatherSearch()
+    // On submit, display api info
+    weatherSearchApi()
+    // Clears search input
+    clearInput();
 })
 
 
-function weatherSearch() {
+function weatherSearchApi() {
+
     // get the value of the search input
-    
     let inputCity = document.getElementById('search-input').value;
     
-    // Clears search input
-    clearInput();
-
     let apiKey = 'efb239de7d746f4bc88b6d592ea228c1'
     let cityURL = `https://api.openweathermap.org/geo/1.0/direct?q=${inputCity}&limit=5&appid=` + apiKey;
-
 
     fetch(cityURL)
         .then(response => response.json())
@@ -66,7 +64,7 @@ function weatherSearch() {
             // Data pulled from api call
 
             let windSpeed = ("The Wind speed is: " + data.list[0].wind.speed + "m/s")
-            let temp = ("The temp is: " + data.list[0].main.temp + "℃");
+            let temp = ("The current temp is: " + data.list[0].main.temp + "℃");
             let humidity = data.list[0].main.humidity
             let humidityData = ("The humidity is: " + humidity + "%");
             let currentCity = data.city.name;
@@ -84,18 +82,21 @@ function weatherSearch() {
             
             const listArray = [];
 
+            // clear current weather
+            currentWeatherEl.innerHTML = "";
+
             for (let i = 0; i < 3; i++) {
                 const li = document.createElement("li");
                 li.classList.add("mb-2");
                 listArray.push(li);
             }
 
-            listArray[0].innerHTML = temp;
+            listArray[0].textContent = temp;
             listArray[1].textContent = humidityData;
             listArray[2].textContent = windSpeed;
             
             listArray.forEach(li => {
-                currentConditionsUl.append(li);
+                currentWeatherEl.append(li);
             })
             // document.querySelector("#conditions").append(newList)
 
@@ -123,4 +124,6 @@ function weatherSearch() {
         });
 
 }
+
+
 
