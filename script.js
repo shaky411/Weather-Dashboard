@@ -105,11 +105,12 @@ function weatherSearchApi() {
 
 
 
-            let fiveDayArray = [];
+            // five day weather
 
+            let fiveDayArray = [];
             dailyForecastContainer.innerHTML = "";
 
-
+            // loop to display 5 cards
             for (let i = 0; i < 5; i++) {
                 const weatherCards = document.createElement("div");
 

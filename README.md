@@ -2,7 +2,7 @@
 
 ## The Task:
 
-* I have been tasked with creating a simple calendar application that allows users to save events for each hour of the day.
+* I have been tasked with creating a simple weather app
 
 * This app features dynamically updated HTML and CSS.
 
@@ -10,25 +10,21 @@
 
 * Create an app that meets the following criteria:
 
-    * Display the current day at the top of the calender when a user opens the planner.
+    * Display the current weather for the searched location
  
-    * Present timeblocks for standard business hours when the user scrolls down.
+    * Display a summary of the weather for the next five days
  
-    * Color-code each timeblock based on past, present, and future when the timeblock is viewed.
+    * Save recently searched cities and create buttons to easily access previous searches
  
-    * Allow a user to enter an event when they click a timeblock
-
-    * Save the event in local storage when the save button is clicked in that timeblock.
-
-    * Persist events between refreshes of a page
+    * Utilise local storage to save recent searches
 
 ## Installation
 
-To run, simply open the following link in your web browser and add events to your daily schedule. Events that you add will be save to your local storage so they will remain on the app when you refresh, close and re-open the app.
+To run, simply open the following link in your web browser and type a city in the search field.
 
-You can access the calendar app through the following link:
+You can access the weather app through the following link:
 
-https://shaky411.github.io/Work-Day-Scheduler
+https://shaky411.github.io/Weather-Dashboard
 
 ## Usage
 
